@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="Estilo.css">
+    </head>
+    <body>
+        <header class="headerDaPagina">
+            <a href="PaginaIncial.html"><img src="Imagem/logo.png" alt="Logo" height="150" weight="150"></a>
+        </header>
+        <main>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 30px; padding: 20px; margin: 0 auto;">
+                 <form style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+                    <div class="formatacaoCaixaArredondada" style="margin-top: 20px; padding: 20px;">
+                        <label for="nome">Nome:*
+                            <input type="text" id="nome">
+                        </label>
+                        <label for="filamento">Filamento: *
+                            <select id="filamento">
+                                <option value="PLA">PLA</option>
+                                <option value="ABS">ABS</option>
+                                <option value="PETG">PETG</option>
+                                <option value="TPU">TPU</option>
+                                <option value="Nylon">Nylon</option>
+                                <option value="ASA">ASA</option>
+                                <option value="Outro">Outro (coloque na descrição)</option>
+                        </label>
+                        <label for="tempo">Tempo estimado de fabricação (HH:MM): *
+                            <input type="time" id="tempo">
+                        </label>
+                        <p>Descrição da peça:</p>
+                        <textarea style="width: 100%; height: 100px; resize: none; border-radius: 20px;"></textarea>
+                    </div>
+                    <div class="formatacaoCaixaArredondada" style="margin-top: 20px; padding: 20px;">
+                        <label for="arquivo">Arquivo da peça (formato .stl e .3MF): *
+                            <div class ="formatacaoCaixaArredondada" style="width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; border: 1px solid #000; border-radius: 20px;">
+                                <p>Arraste e solte o arquivo aqui</p>
+                                <input type="file" id="arquivo" accept=".stl,.3mf">
+                            </div>
+                        </label>
+                    </div>
+                 </form>
+                <aside class="formatacaoCaixaArredondada" style="margin-top: 20px; margin-bottom: 20px; padding: 20px;">
+                    <div class="formatacaoCaixaArredondada" style="margin-top: 20px; padding: 20px;">
+                        <h2>Alerta em Tempo Real:</h2>
+                        <p>Você será notificado instantaneamente via spam assim que um fabricante aceitar apeça, com <strong>identificação corporativa do fornecedor</strong></p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; width: fit-content; gap: 15px; margin: 20px auto 0 auto; align-items: center; justify-content: center;">
+                        <a href="TelaPrincipalFuncRecpt.html"><button style="background-color: #A70404; color:#fff; border: solid #A70404; height: 50px; width: 150px;">Voltar</button></a>
+                        <button style="background-color: #008F11; color:#fff; border: solid #008F11; height: 50px; width: 150px;" type="submit">Enviar Solicitação</button>
+                    </div>
+                </aside>
+            </div>
+        </main>
+        <footer class="footerDaPagina">
+            <h3>Fundadores:</h3>
+            <nav style="display: flex; gap: 20px;">
+                <a style="color: #fff; text-decoration: none;" href="https://maua.br/">Instituto Mauá de Tecnologia</a>
+                <a style="color: #fff; text-decoration: none;" href="https://aacd.org.br/">AACD</a>
+            </nav>
+        </footer>
+    </body>
+</html>
