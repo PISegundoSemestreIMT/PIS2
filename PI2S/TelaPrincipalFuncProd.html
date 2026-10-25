@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="Estilo.css">
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            main {
+                flex: 1 0 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            form {
+                flex: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="headerDaPagina col-12">
+            <a href="PaginaIncial.html"><img src="Imagem/logo.png" alt="Logo" height="100" width="250"></a>
+        </header>
+        <main class="container my-4">
+            <div class="container-abas col-12 mb-3">
+                <div class="aba ativa" onclick="mudarAba(event, 'disponiveis')">Pedidos Disponíveis</div>
+                <div class="aba" onclick="mudarAba(event, 'andamento')">Pedidos em Andamento</div>
+                <div class="aba" onclick="mudarAba(event, 'concluidos')">Pedidos Concluídos</div>
+            </div>
+
+            <div class="container-conteudo col-12">    
+                <div id="disponiveis" class="conteudo-aba ativo formatacaoCaixaArredondada p-3" style="max-height: 610px; overflow-y: auto;">
+                    
+                    <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
+                        <div class="row align-items-center g-3">
+                            <div class="col-md-3 text-center">
+                                <img src="Imagem/pedidosPendentes.png" alt="foto pedido" class="img-fluid rounded-4" style="max-height: 150px; object-fit: cover;">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Nome:</strong> </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Tipo de Filamento:</strong> </p>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Tempo Estimado:</strong> </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Empresa Fabricante:</strong> </p>
+                                    </div>
+                                </div>
+                                <div class="mb-1">
+                                    <p class="mb-1"><strong>Descrição:</strong></p>
+                                    <textarea class="form-control" style="height: 80px; resize: none; border-radius: 15px;" readonly></textarea>
+                                </div>
+                                <button class="btn btn-primary mt-3" type="submit" style="background-color: #008F11; border-color: #008F11; color:#fff; height: 50px; width: 150px;">Aceitar Pedido</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="andamento" class="conteudo-aba formatacaoCaixaArredondada p-3" style="max-height: 610px; overflow-y: auto;">
+                    <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
+                        <div class="row align-items-center g-3">
+                            <div class="col-md-3 text-center">
+                                <img src="Imagem/pedidosPendentes.png" alt="foto pedido" class="img-fluid rounded-4" style="max-height: 150px; object-fit: cover;">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Nome:</strong> </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Tipo de Filamento:</strong> </p>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Tempo Estimado:</strong> </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Empresa Fabricante:</strong> </p>
+                                    </div>
+                                </div>
+                                <div class="mb-1">
+                                    <p class="mb-1"><strong>Descrição:</strong></p>
+                                    <textarea class="form-control" style="height: 80px; resize: none; border-radius: 15px;" readonly></textarea>
+                                </div>
+                                <button class="btn btn-primary mt-3" type="submit" style="background-color: #008F11; border-color: #008F11; color:#fff; height: 50px; width: 150px;">Concluir Pedido</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="concluidos" class="conteudo-aba formatacaoCaixaArredondada p-3" style="max-height: 610px; overflow-y: auto;">
+                    <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
+                        <div class="row align-items-center g-3">
+							<div class="col-md-3 text-center">
+                                <img src="Imagem/pedidosPendentes.png" alt="foto pedido" class="img-fluid rounded-4" style="max-height: 150px; object-fit: cover;">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Nome:</strong> </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Tipo de Filamento:</strong> </p>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Tempo Estimado:</strong> </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"><strong>Empresa Fabricante:</strong> </p>
+                                    </div>
+                                </div>
+                                <div class="mb-1">
+                                    <p class="mb-1"><strong>Descrição:</strong></p>
+                                    <textarea class="form-control" style="height: 80px; resize: none; border-radius: 15px;" readonly></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary mt-3" type="button" onclick="window.location.href='TelaSolicitação.html'" style="background-color: #006ad4; border-color: #006ad4; height: 50px; width: 150px;">Criar Solicitação</button>
+        </main>
+        
+        <footer class="footerDaPagina col-12 mt-4 py-3">
+            <div class="container text-center text-white">
+                <h3>Fundadores:</h3>
+                <nav class="d-flex justify-content-center gap-4">
+                    <a style="color: #fff; text-decoration: none;" href="https://maua.br/">Instituto Mauá de Tecnologia</a>
+                    <a style="color: #fff; text-decoration: none;" href="https://aacd.org.br/">AACD</a>
+                </nav>
+            </div>
+        </footer>
+
+        <script>
+            function mudarAba(evento, idAba) {
+                const abas = document.querySelectorAll('.aba');
+                abas.forEach(aba => aba.classList.remove('ativa'));
+                const conteudos = document.querySelectorAll('.conteudo-aba');
+                conteudos.forEach(conteudo => conteudo.classList.remove('ativo'));
+                evento.currentTarget.classList.add('ativa');
+                document.getElementById(idAba).classList.add('ativo');
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </body>
+</html>
