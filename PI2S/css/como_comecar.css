@@ -1,0 +1,11 @@
+.how-to-start-main {
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.58)),
+        url("../Imagem/impressora.jpg") center / cover no-repeat;
+}
+
+.how-to-start-main h1,
+.how-to-start-main > .container > .row:first-child p {
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
