@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="height: 100%;">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/Estilo.css">
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/footer.css">
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            main {
+                flex: 1 0 auto;
+                display: flex;
+                flex-direction: column;
+            }
+            form {
+                flex: 1;
+            }
+            .coluna-esquerda {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar navbar-expand-lg site-navbar">
+                <div class="container-fluid">
+                    <a class="navbar-brand site-navbar-brand" href="PaginaIncial.html#home" aria-label="3DConecta - Home">
+                        <span class="site-logo-wrapper">
+                            <img src="../Imagem/logo.png" alt="3DConecta" class="site-logo">
+                        </span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavbar" aria-controls="siteNavbar" aria-expanded="false" aria-label="Abrir menu de navegação">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="siteNavbar">
+                        <ul class="navbar-nav mx-auto mb-3 mb-lg-0 site-nav-list">
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="PaginaIncial.html#home">Home</a></li>
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="PaginaIncial.html#sobre-nos">Sobre nós</a></li>
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="como_comecar.html">Como começar</a></li>
+                        </ul>
+                        <a class="btn btn-light site-login-button" onclick="fazerLogout()" href="PaginaIncial.html">Sair da Conta</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container-fluid py-3">
+            <form id="formSolicitacao" class="row h-100 g-3" onsubmit="cadastrarPedido(event)">
+                <div class="col-sm-12 col-md-8 coluna-esquerda">
+                    <div class="formatacaoCaixaArredondada p-3 mb-3 border">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome: *</label>
+                            <input type="text" id="nome" name="nome" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipo_filamento" class="form-label">Filamento: *</label>
+                            <select id="tipo_filamento" name="tipo_filamento" class="form-select">
+                                <option value="PLA">PLA</option>
+                                <option value="ABS">ABS</option>
+                                <option value="PETG">PETG</option>
+                                <option value="TPU">TPU</option>
+                                <option value="Nylon">Nylon</option>
+                                <option value="ASA">ASA</option>
+                                <option value="Outro">Outro (coloque na descrição)</option>
+                            </select>
+                        </div>
+                         <div class="mb-3">
+                            <label for="tempo" class="form-label">Tempo estimado de fabricação (HH:MM): *</label>
+                            <input type="text" id="tempo" name="tempo" class="form-control" pattern="[0-9]+:[0-5][0-9]" placeholder="Ex: 36:45" style="border-color: #000;" title="Informe o tempo acumulado no formato HH:MM (Ex: 48:30)" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descricao" class="form-label">Descrição da peça:</label>
+                            <textarea id="descricao" name="descricao" class="form-control" style="height: 100px; resize: none; border-radius: 15px; border-color: #000;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="formatacaoCaixaArredondada p-3 border d-flex flex-column align-items-center justify-content-center">
+                        <label for="arquivo" class="w-100 text-center">Arquivo da peça (formato .STL e .3MF): *
+                            <div class="formatacaoCaixaArredondada mt-2 d-flex flex-column align-items-center justify-content-center border" style="height: 120px; border-radius: 15px;">
+                                <p class="m-0 mb-2">Arraste e solte o arquivo aqui</p>
+                                <input type="file" id="arquivo" name="arquivo" accept=".stl,.3mf" required>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-4 d-flex flex-column justify-content-between">
+                    <aside class="formatacaoCaixaArredondada p-3 border h-100 d-flex flex-column justify-content-between">
+                        <div class="formatacaoCaixaArredondada p-3 border">
+                            <h2>Alerta em Tempo Real:</h2>
+                            <p>Você será notificado instantaneamente assim que um fabricante aceitar a peça, com <strong>identificação corporativa do fornecedor</strong></p>
+                        </div>
+
+                        <div class="d-flex flex-column gap-3 my-auto align-items-center justify-content-center">
+                            <button type="button" onclick="window.location.href='TelaPrincipalFuncRecpt.html'" class="btn" style="background-color: #A70404; color:#fff; height: 50px; width: 150px;">Voltar</button>
+                            <button class="btn" style="background-color: #008F11; color:#fff; height: 50px; width: 150px;" type="submit">Enviar Solicitação</button>
+                        </div>
+                    </aside>
+                </div>
+            </form>
+        </main>
+
+        <footer class="site-footer mt-auto">
+            <div class="container py-4">
+                <div class="row g-4">
+                    <section class="col-12 col-md-6 text-center text-md-start">
+                        <h2 class="site-footer-heading">Fale conosco</h2>
+                        <p class="site-footer-email mb-2"><a href="mailto:3dconecta@gmail.com">3dconecta@gmail.com</a></p>
+                        <p class="site-footer-credit mb-0">Desenvolvido para conectar quem precisa a quem pode ajudar.</p>
+                    </section>
+                    <nav class="col-12 col-md-6 site-footer-navigation text-center text-md-end" aria-label="Navegação do rodapé">
+                        <h2 class="site-footer-heading">Navegação</h2>
+                        <div class="site-footer-nav d-flex flex-column gap-2">
+                            <a href="PaginaIncial.html#home">Início</a>
+                            <a href="PaginaIncial.html#sobre-nos">Sobre nós</a>
+                            <a href="como_comecar.html">Como começar</a>
+                            <a href="https://maua.br/">Instituto Mauá</a>
+                            <a href="https://aacd.org.br/">AACD</a>
+                        </div>
+                    </nav>
+                    <div class="col-12">
+                        <p class="site-footer-copyright text-center mb-0">© 2026 3DConecta. Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            const protocolo = 'http://';
+            const baseURL = 'localhost:3000';
+            let usuario = null;
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const dadosSalvos = sessionStorage.getItem("usuarioLogado");
+                if (!dadosSalvos) {
+                    alert("Acesso negado! Por favor, faça login.");
+                    window.location.href = "Entrar.html";
+                    return;
+                }
+                usuario = JSON.parse(dadosSalvos);
+            });
+
+            async function cadastrarPedido(evento) {
+                evento.preventDefault(); 
+
+                if (!usuario) {
+                    alert("Sessão expirada. Faça login novamente.");
+                    window.location.href = "Entrar.html";
+                    return;
+                }
+
+                const nome = document.getElementById('nome').value;
+                const tempo_estimado = document.getElementById('tempo').value;
+                const tipo_filamento = document.getElementById('tipo_filamento').value;
+                const descricao = document.getElementById('descricao').value;
+                const empresa_receptora = usuario.empresa;
+                const agente_receptor = usuario._id;
+
+                const inputArquivo = document.getElementById('arquivo');
+                if (inputArquivo.files.length === 0) {
+                    alert("Por favor, selecione um arquivo .STL ou .3MF.");
+                    return;
+                }
+                const arquivoOriginal = inputArquivo.files[0]; 
+
+                const formData = new FormData();
+                
+                formData.append('arquivo', arquivoOriginal); 
+                
+                formData.append('nome', nome);
+                formData.append('tempo_estimado', tempo_estimado); 
+                formData.append('tipo_filamento', tipo_filamento);
+                formData.append('descricao', descricao);
+                formData.append('empresa_receptora', empresa_receptora);
+                formData.append('agente_receptor', agente_receptor);
+
+                try {
+                    const resposta = await axios.post(`${protocolo}${baseURL}/pedidos`, formData);
+
+                    if (resposta.status === 201) {
+                        alert("Solicitação enviada com sucesso!");
+                        window.location.href = 'TelaPrincipalFuncRecpt.html';
+                    }
+                } catch (erro) {
+                    console.error("Erro ao enviar pedido:", erro);
+                    const mensagemErro = erro.response?.data?.erro || "Ocorreu um erro ao enviar sua solicitação.";
+                    alert(mensagemErro);
+                }
+            }
+            function fazerLogout() {
+                sessionStorage.removeItem("usuarioLogado");
+                window.location.href = "Entrar.html";
+            }
+        </script>
+    </body>
+</html>
