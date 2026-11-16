@@ -125,86 +125,108 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        function mudarAba(evento, idAba) {
-            const abas = document.querySelectorAll('.aba');
-            abas.forEach(aba => aba.classList.remove('ativa'));
-            const conteudos = document.querySelectorAll('.conteudo-aba');
-            conteudos.forEach(conteudo => conteudo.classList.remove('ativo'));
-            evento.currentTarget.classList.add('ativa');
-            document.getElementById(idAba).classList.add('ativo');
+    const protocolo = 'http://';
+    const baseURL = 'localhost:3000';
+    let usuario = null;
+
+    function esc(t) {
+        return String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function mudarAba(evento, idAba) {
+        document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('ativa'));
+        document.querySelectorAll('.conteudo-aba').forEach(c => c.classList.remove('ativo'));
+        evento.currentTarget.classList.add('ativa');
+        document.getElementById(idAba).classList.add('ativo');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const dadosSalvos = sessionStorage.getItem("usuarioLogado");
+
+        if (!dadosSalvos) {
+            alert("Acesso negado! Por favor, faça login.");
+            window.location.href = "Entrar.html";
+            return;
         }
 
-        const protocolo = 'http://';
-        const baseURL = 'localhost:3000';
+        usuario = JSON.parse(dadosSalvos);
+        carregarFuncionarios();
+        carregarImpressoras();
+    });
 
-        function esc(t) {
-            return String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-        }
+    async function carregarFuncionarios() {
+        const div = document.getElementById('funcionarios');
+        try {
+            const resposta = await axios.get(`${protocolo}${baseURL}/funcionarios`);
+            const lista = resposta.data.filter(f => f.empresa === usuario._id);
 
-        let usuario = null;
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const dadosSalvos = sessionStorage.getItem("usuarioLogado");
-
-            if (!dadosSalvos) {
-                alert("Acesso negado! Por favor, faça login.");
-                window.location.href = "Entrar.html";
+            if (lista.length === 0) {
+                div.innerHTML = '<p class="text-center text-muted">Nenhum funcionário cadastrado.</p>';
                 return;
             }
 
-            usuario = JSON.parse(dadosSalvos);
-            carregarFuncionarios();
-            carregarImpressoras();
-        });
-
-        async function carregarFuncionarios() {
-            const div = document.getElementById('funcionarios');
-            try {
-                const resposta = await axios.get(`${protocolo}${baseURL}/funcionarios`);
-                const lista = resposta.data.filter(f => f.empresa === usuario._id);
-
-                if (lista.length === 0) {
-                    div.innerHTML = '<p class="text-center text-muted">Nenhum funcionário cadastrado.</p>';
-                    return;
-                }
-
-                div.innerHTML = lista.map(f => `
-            <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
-                <p class="mb-1"><strong>Nome:</strong> ${esc(f.nome)}</p>
-                <p class="mb-0"><strong>Email:</strong> ${esc(f.email)}</p>
-            </div>
-        `).join('');
-            } catch (erro) {
-                console.error("Erro ao carregar funcionários:", erro);
-                div.innerHTML = '<p class="text-center text-danger">Erro ao carregar os funcionários.</p>';
-            }
+            div.innerHTML = lista.map(f => `
+                <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
+                    <p class="mb-1"><strong>Nome:</strong> ${esc(f.nome)}</p>
+                    <p class="mb-0"><strong>Email:</strong> ${esc(f.email)}</p>
+                </div>
+            `).join('');
+        } catch (erro) {
+            console.error("Erro ao carregar funcionários:", erro);
+            div.innerHTML = '<p class="text-center text-danger">Erro ao carregar os funcionários.</p>';
         }
+    }
 
-        async function carregarImpressoras() {
-            const div = document.getElementById('impressoras');
-            try {
-                const resposta = await axios.get(`${protocolo}${baseURL}/empresas/${usuario._id}/impressoras`);
-                const lista = resposta.data;
+    async function carregarImpressoras() {
+        const div = document.getElementById('impressoras');
+        try {
+            const resposta = await axios.get(`${protocolo}${baseURL}/empresas/${usuario._id}/impressoras`);
+            const lista = resposta.data;
 
-                if (lista.length === 0) {
-                    div.innerHTML = '<p class="text-center text-muted">Nenhuma impressora cadastrada.</p>';
-                    return;
-                }
-
-                div.innerHTML = lista.map(i => `
-            <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
-                <p class="mb-1"><strong>Nome:</strong> ${esc(i.nome_impressora)}</p>
-                <p class="mb-1"><strong>Marca:</strong> ${esc(i.marca)}</p>
-                <p class="mb-1"><strong>Volume útil (mm):</strong> ${esc(i.volume_util?.x)} x ${esc(i.volume_util?.y)} x ${esc(i.volume_util?.z)}</p>
-                <p class="mb-0"><strong>Filamentos:</strong> ${esc((i.filamentos || []).join(', '))}</p>
-            </div>
-        `).join('');
-            } catch (erro) {
-                console.error("Erro ao carregar impressoras:", erro);
-                div.innerHTML = '<p class="text-center text-danger">Erro ao carregar as impressoras.</p>';
+            if (lista.length === 0) {
+                div.innerHTML = '<p class="text-center text-muted">Nenhuma impressora cadastrada.</p>';
+                return;
             }
+
+            div.innerHTML = lista.map(i => `
+                <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
+                    <p class="mb-1"><strong>Nome:</strong> ${esc(i.nome_impressora)}</p>
+                    <p class="mb-1"><strong>Marca:</strong> ${esc(i.marca)}</p>
+                    <p class="mb-1"><strong>Volume útil (mm):</strong> ${esc(i.volume_util?.x)} x ${esc(i.volume_util?.y)} x ${esc(i.volume_util?.z)}</p>
+                    <p class="mb-0"><strong>Filamentos:</strong> ${esc((i.filamentos || []).join(', '))}</p>
+                </div>
+            `).join('');
+        } catch (erro) {
+            console.error("Erro ao carregar impressoras:", erro);
+            div.innerHTML = '<p class="text-center text-danger">Erro ao carregar as impressoras.</p>';
         }
-    </script>
+    }
+
+    function criarFuncionario(event) {
+        event.preventDefault();
+        if (!sessionStorage.getItem("usuarioLogado")) {
+            alert("Erro: Você precisa estar logado.");
+            window.location.href = "Entrar.html";
+            return;
+        }
+        window.location.href = "tela_criar_func.html";
+    }
+
+    function criarImpressora(event) {
+        event.preventDefault();
+        if (!sessionStorage.getItem("usuarioLogado")) {
+            alert("Erro: Você precisa estar logado.");
+            window.location.href = "Entrar.html";
+            return;
+        }
+        window.location.href = "tela_criar_impressora.html";
+    }
+
+    function fazerLogout() {
+        sessionStorage.removeItem("usuarioLogado");
+        window.location.href = "Entrar.html";
+    }
+</script>
 </body>
 
 </html>
