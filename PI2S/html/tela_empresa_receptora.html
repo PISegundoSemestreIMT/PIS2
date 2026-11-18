@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/Estilo.css">
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/footer.css">
+        <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            main {
+                flex: 1 0 auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            form {
+                flex: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar navbar-expand-lg site-navbar">
+                <div class="container-fluid">
+                    <a class="navbar-brand site-navbar-brand" href="PaginaIncial.html#home" aria-label="3DConecta - Home">
+                        <span class="site-logo-wrapper">
+                            <img src="../Imagem/logo.png" alt="3DConecta" class="site-logo">
+                        </span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavbar" aria-controls="siteNavbar" aria-expanded="false" aria-label="Abrir menu de navegação">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="siteNavbar">
+                        <ul class="navbar-nav mx-auto mb-3 mb-lg-0 site-nav-list">
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="PaginaIncial.html#home">Home</a></li>
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="PaginaIncial.html#sobre-nos">Sobre nós</a></li>
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="como_comecar.html">Como começar</a></li>
+                        </ul>
+                        <a class="btn btn-light site-login-button" onclick="fazerLogout()" href="PaginaIncial.html">Sair da Conta</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container my-4">
+            <div class="container-abas col-12 mb-3">
+                <div class="aba ativa" onclick="mudarAba(event, 'pedidos')">Pedidos</div>
+                <div class="aba" onclick="mudarAba(event, 'funcionarios')">Funcionários</div>
+            </div>
+
+            <div class="container-conteudo col-12">    
+                <div id="pedidos" class="conteudo-aba ativo formatacaoCaixaArredondada p-3" style="max-height: 610px; overflow-y: auto;">
+                </div>
+
+                <div id="funcionarios" class="conteudo-aba formatacaoCaixaArredondada p-3" style="max-height: 610px; overflow-y: auto;">
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-primary mt-3" type="button" onclick="criarFuncionario(event)" style="background-color: #006ad4; border-color: #006ad4; height: 50px; width: 150px;">Criar Funcionário</button>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="site-footer mt-auto">
+            <div class="container py-4">
+                <div class="row g-4">
+                    <section class="col-12 col-md-6 text-center text-md-start">
+                        <h2 class="site-footer-heading">Fale conosco</h2>
+                        <p class="site-footer-email mb-2"><a href="mailto:3dconecta@gmail.com">3dconecta@gmail.com</a></p>
+                        <p class="site-footer-credit mb-0">Desenvolvido para conectar.</p>
+                    </section>
+                    <nav class="col-12 col-md-6 site-footer-navigation text-center text-md-end" aria-label="Navegação do rodapé">
+                        <h2 class="site-footer-heading">Navegação</h2>
+                        <div class="site-footer-nav d-flex flex-column gap-2">
+                            <a href="PaginaIncial.html#home">Início</a>
+                            <a href="PaginaIncial.html#sobre-nos">Sobre nós</a>
+                            <a href="como_comecar.html">Como começar</a>
+                            <a href="https://maua.br/">Instituto Mauá</a>
+                            <a href="https://aacd.org.br/">AACD</a>
+                        </div>
+                    </nav>
+                    <div class="col-12">
+                        <p class="site-footer-copyright text-center mb-0">© 2026 3DConecta. Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            function mudarAba(evento, idAba) {
+                const abas = document.querySelectorAll('.aba');
+                abas.forEach(aba => aba.classList.remove('ativa'));
+                const conteudos = document.querySelectorAll('.conteudo-aba');
+                conteudos.forEach(conteudo => conteudo.classList.remove('ativo'));
+                evento.currentTarget.classList.add('ativa');
+                document.getElementById(idAba).classList.add('ativo');
+            }
+
+            const protocolo = 'http://';
+            const baseURL = 'localhost:3000';
+            let usuario = null
+            document.addEventListener("DOMContentLoaded", () => {
+                const dadosSalvos = sessionStorage.getItem("usuarioLogado");
+
+                if (!dadosSalvos) {
+                    alert("Acesso negado! Por favor, faça login.");
+                    window.location.href = "Entrar.html";
+                    return;
+                }
+
+                usuario = JSON.parse(dadosSalvos);
+                carregarPedidos();
+                carregarFuncionarios();
+            });
+
+            function esc(t) {
+                return String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+            }
+
+            async function carregarFuncionarios() {
+                const div = document.getElementById('funcionarios');
+                try {
+                    const resposta = await axios.get(`${protocolo}${baseURL}/funcionarios`);
+                    const lista = resposta.data.filter(f => f.empresa === usuario._id);
+
+                    if (lista.length === 0) {
+                        div.innerHTML = '<p class="text-center text-muted">Nenhum funcionário cadastrado.</p>';
+                        return;
+                    }
+
+                    div.innerHTML = lista.map(f => `
+                        <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
+                            <p class="mb-1"><strong>Nome:</strong> ${esc(f.nome)}</p>
+                            <p class="mb-1"><strong>Email:</strong> ${esc(f.email)}</p>
+                            <p class="mb-0"><button class="btn btn-primary" type="button" onclick="deletarFunc('${f._id}')" style="background-color: #A70404; border-color: #A70404; color:#fff; height: 40px; width: 200px;">Deletar Funcionário</button>
+
+                        </div>
+                    `).join('');
+                } catch (erro) {
+                    console.error("Erro ao carregar funcionários:", erro);
+                    div.innerHTML = '<p class="text-center text-danger">Erro ao carregar os funcionários.</p>';
+                }
+            }
+
+            async function carregarPedidos() {
+                const div = document.getElementById('pedidos');
+                try {
+                    const resposta = await axios.get(`${protocolo}${baseURL}/pedidos`);
+                    const lista = resposta.data.filter(p => p.empresa_receptora === usuario._id);;
+
+                    if (lista.length === 0) {
+                        div.innerHTML = '<p class="text-center text-muted">Nenhum pedido cadastrada.</p>';
+                        return;
+                    }
+                    const pedidosComDados = await Promise.all(lista.map(async p => {
+                        const [empFab, agFab, agRec] = await Promise.all([
+                            buscarDados('empresas', p.empresa_fabricante),
+                            buscarDados('funcionarios', p.agente_fabricante),
+                            buscarDados('funcionarios', p.agente_receptor)
+                        ]);
+                        return { p, empFab, agFab, agRec };
+                    }));
+                    div.innerHTML = pedidosComDados.map(({ p, empFab, agFab, agRec }) =>`
+                    <div class="formatacaoCaixaArredondada p-3 mb-3 border bg-white">
+                                        <div class="row align-items-center g-3">
+                                            <div class="col-md-3 text-center">
+                                                ${p.modeloPath ? `
+                                                    <model-viewer src="${protocolo}${baseURL}/pedidos/modelo/${p._id}"
+                                                        alt="Modelo 3D do pedido"
+                                                        auto-rotate
+                                                        shadow-intensity="1" loading="lazy"
+                                                        style="width:100%; height:180px; background:#f1f1f1; border-radius:24px;">
+                                                    </model-viewer>
+                                                ` : `
+                                                    <img src="../Imagem/pedidosPendentes.png" alt="foto pedido" class="img-fluid rounded-4" style="max-height: 150px; object-fit: cover;">
+                                                `}
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="row g-2 mb-2">
+                                                    <div class="col-sm-6">
+                                                        <p class="mb-1"><strong>Nome:</strong> ${p.nome || 'Não informado'}</p>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p class="mb-1"><strong>Tipo de Filamento:</strong> ${p.tipo_filamento || 'Não informado'}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-2 mb-2">
+                                                    <div class="col-sm-6">
+                                                        <p class="mb-1"><strong>Tempo Estimado:</strong> ${p.tempo_estimado || 'Não informado'}</p>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p class="mb-1"><strong>Empresa Produtora:</strong> ${textoPessoa(empFab, 'nome_empresa')}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-2 mb-2">
+                                                    <div class="col-sm-6">
+                                                        <p class="mb-1"><strong>Agente Receptor:</strong> ${textoPessoa(agRec, 'nome')}</p>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p class="mb-1"><strong>Agente Produtor:</strong> ${textoPessoa(agFab, 'nome')}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-2 mb-2">
+                                                    <div class="col-sm-6">
+                                                        <p class="mb-1"><strong>Status:</strong> ${p.status || 'Não informado'}</p>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p class="mb-1"><strong>Data do Status:</strong> ${dataDoStatus(p)}</p>
+                                                    </div>  
+                                                </div>
+                                                <div class="mb-1">
+                                                    <p class="mb-1"><strong>Descrição:</strong></p>
+                                                    <textarea class="form-control" style="height: 80px; resize: none; border-radius: 15px;" readonly>${p.descricao || ''}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('');
+                } catch (erro) {
+                    console.error("Erro ao carregar pedidos:", erro);
+                    div.innerHTML = '<p class="text-center text-danger">Erro ao carregar as pedidos.</p>';
+                }
+            }
+
+            function criarFuncionario(event) {
+                event.preventDefault();
+                const dadosSessao = sessionStorage.getItem("usuarioLogado");
+
+                if (!dadosSessao) {
+                    alert("Erro: Você precisa estar logado para criar um funcionário.");
+                    window.location.href = "Entrar.html";
+                    return;
+                }
+                window.location.href = "tela_criar_func.html";
+            }
+
+            async function deletarFunc(id) {
+                if (!confirm("Tem certeza que deseja deletar este funcionario?")) return;
+                try {
+                    const resposta = await axios.delete(`${protocolo}${baseURL}/funcionarios/delete/${id}`);
+                    alert(resposta.data.mensagem);
+                    carregarFuncionarios();
+                } catch (erro) {
+                    console.error(erro);
+                    alert(erro.response?.data?.erro || "Erro ao deletar o funcionario.");
+                }
+            }
+            
+            async function buscarDados(tipo, id) {
+                if (!id) return null;
+                try {
+                    const r = await fetch(`${protocolo}${baseURL}/${tipo}/${encodeURIComponent(id)}`);
+                    if (!r.ok) return null;
+                    return await r.json();
+                } catch {
+                    return null;
+                }
+            }
+
+            function dataDoStatus(p) {
+                const data = p.data_conclusao || p.data_andamento || p.data_criacao;
+                if (!data) return 'Não informado';
+
+                return new Date(data).toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'});
+            }
+
+            function textoPessoa(dados, campoNome) {
+                if (!dados) return 'Não informado';
+                return `${esc(dados[campoNome] || 'Não informado')} | ${esc(dados.email || 'Não informado')}`;
+            }
+
+            function fazerLogout() {
+                sessionStorage.removeItem("usuarioLogado");
+                window.location.href = "Entrar.html";
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!--Patrick, qualquer duvida com o html, pode me ligar. ass:Igor-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/Estilo.css">
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/footer.css">
+        <link rel="stylesheet" href="../css/pagina_Inicial.css">
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar navbar-expand-lg site-navbar">
+                <div class="container-fluid">
+                    <a class="navbar-brand site-navbar-brand" href="#home" aria-label="3DConecta - Home">
+                        <span class="site-logo-wrapper">
+                            <img src="../Imagem/logo.png" alt="3DConecta" class="site-logo">
+                        </span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavbar" aria-controls="siteNavbar" aria-expanded="false" aria-label="Abrir menu de navegação">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="siteNavbar">
+                        <ul class="navbar-nav mx-auto mb-3 mb-lg-0 site-nav-list">
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="#home">Home</a></li>
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="#sobre-nos">Sobre nós</a></li>
+                            <li class="nav-item"><a class="nav-link site-nav-link" href="como_comecar.html">Como começar</a></li>
+                        </ul>
+                        <a class="btn btn-light site-login-button" href="Entrar.html">Logar</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main id="home">
+            <section class="hero-banner d-flex align-items-center" aria-label="Apresentação do projeto">
+                <div class="container">
+                    <div class="hero-content text-white">
+                        <p class="hero-eyebrow mb-2">Tecnologia que transforma vidas</p>
+                        <h1 class="display-4 fw-bold">Mais possibilidades para todos.</h1>
+                        <p class="lead mb-4">Conectamos a comunidade para imprimir algo maior.</p>
+                        <a class="btn btn-light btn-lg" href="#sobre-nos">Conheça o projeto</a>
+                    </div>
+                </div>
+            </section>
+            <article id="sobre-nos" class="container py-5">
+                <h2 class="mb-3">SOBRE NÓS</h2>
+                <p class="lead">O site 3DConecta é uma plataforma sem fins lucrativos e com fins educacionais desenvolvida para conectar instituições de saúde e centros de tecnologia ou proprietários de impressoras 3D. O objetivo principal da iniciativa é suprir a alta demanda por próteses, órteses e outros equipamentos médicos essenciais que podem ser fabricados por meio da manufatura aditiva. Muitas clínicas, hospitais públicos e santas casas enfrentam severas restrições orçamentárias ou longas filas de espera para fornecer dispositivos de reabilitação aos seus pacientes.</p>
+                <p class="lead mb-0">Ao mesmo tempo, diversas universidades, laboratórios de pesquisa, makerspaces e empresas privadas possuem impressoras 3D ociosas ou capacidade técnica disponível que poderia ser direcionada para causas sociais. A plataforma atua justamente como essa ponte integradora, transformando maquinário disponível em soluções de saúde que mudam vidas. Os hospitais cadastram suas necessidades específicas, incluindo arquivos de modelagem tridimensional e especificações técnicas exigidas pelos médicos. Do outro lado, as instituições colaboradoras voluntárias aceitam a missão de produzir as peças utilizando materiais adequados e seguros para o uso hospitalar.</p>
+            </article>
+        </main>
+        <footer class="site-footer mt-auto">
+            <div class="container py-4">
+                <div class="row g-4">
+                    <section class="col-12 col-md-6 text-center text-md-start">
+                        <h2 class="site-footer-heading">Fale conosco</h2>
+                        <p class="site-footer-email mb-2"><a href="mailto:3dconecta@gmail.com">3dconecta@gmail.com</a></p>
+                        <p class="site-footer-credit mb-0">Desenvolvido para conectar.</p>
+                    </section>
+                    <nav class="col-12 col-md-6 site-footer-navigation text-center text-md-end" aria-label="Navegação do rodapé">
+                        <h2 class="site-footer-heading">Navegação</h2>
+                        <div class="site-footer-nav d-flex flex-column gap-2">
+                            <a href="#home">Início</a>
+                            <a href="#sobre-nos">Sobre nós</a>
+                            <a href="como_comecar.html">Como começar</a>
+                            <a href="https://maua.br/">Instituto Mauá</a>
+                        </div>
+                    </nav>
+                    <div class="col-12">
+                        <p class="site-footer-copyright text-center mb-0">© 2026 3DConecta. Todos os direitos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </body>
+</html>
